@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\myChatServer.OracleConnector\myChatServer.OracleConnector.csproj" />
+    <ProjectReference Include="..\myChetServer.Utils\myChetServer.Utils.csproj" />
+  </ItemGroup>
+
+</Project>
