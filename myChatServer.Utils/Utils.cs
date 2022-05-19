@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace myChatServer.Utils
 {
-    public class Utils
+    public static class Utils
     {
         public static string getObjectToString(object o)
         {

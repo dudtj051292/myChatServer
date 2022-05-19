@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FncObjects\FncObjects.csproj" />
+    <ProjectReference Include="..\myChatServer.Utils\myChatServer.Utils.csproj" />
   </ItemGroup>
 
 </Project>

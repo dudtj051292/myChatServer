@@ -7,8 +7,8 @@
     <ProjectGuid>{E37E03F8-F2C6-4AE3-A4BD-157C18B23B06}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>myChetServer.Utils</RootNamespace>
-    <AssemblyName>myChetServer.Utils</AssemblyName>
+    <RootNamespace>myChatServer.Utils</RootNamespace>
+    <AssemblyName>myChatServer.Utils</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

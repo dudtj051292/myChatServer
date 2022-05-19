@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\myChatServer.OracleConnector\myChatServer.OracleConnector.csproj" />
-    <ProjectReference Include="..\myChetServer.Utils\myChetServer.Utils.csproj" />
+    <ProjectReference Include="..\myChatServer.Utils\myChatServer.Utils.csproj" />
   </ItemGroup>
 
 </Project>

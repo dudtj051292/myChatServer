@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myChatServer", "myChatServe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FncObjects", "FncObjects\FncObjects.csproj", "{49A07A56-56FF-451D-8E19-1D5E9AE246C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "myChetServer.Utils", "myChetServer.Utils\myChetServer.Utils.csproj", "{E37E03F8-F2C6-4AE3-A4BD-157C18B23B06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "myChatServer.Utils", "myChatServer.Utils\myChatServer.Utils.csproj", "{E37E03F8-F2C6-4AE3-A4BD-157C18B23B06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
