@@ -14,7 +14,7 @@ namespace fncChatServerModules
         {
             string sql = "";
 
-            jobj.GetValue("SABUN")
+            jobj.GetValue("SABUN");
 
             MysqlModule.GetDataTable(sql);
         }
