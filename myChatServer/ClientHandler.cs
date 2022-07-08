@@ -1,4 +1,7 @@
-﻿using myChatServer.OracleConnector;
+﻿using FncObjects;
+using myChatServer.OracleConnector;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,38 +34,72 @@ namespace myChatServer
 
             while (true)
             {
-                string str = reader.ReadLine();
+                StringBuilder msg = new StringBuilder();
+
+                int index = 0;
+                string txt = getJSonMsg(reader);
                 
-                if(str == "getMember")
-                {
-                    string sqlString = 
-                        $@"SELECT A.SEQ, A.NAME, A.DEPT, A.TITLE 
-                             FROM FNC_USER A  ";
-                    str = Utils.Utils.getDataTableToJSON(myOracleConnection.getSqlData(sqlString));
-                    writer.WriteLine(str);
-                }
-                else if ( str == "getDept")
-                {
-                    string sqlString =
-                        $@"SELECT A.DEPT, A.DEPTNAME
-                             FROM FNC_DEPT A";
-                    str = Utils.Utils.getDataTableToJSON(myOracleConnection.getSqlData(sqlString));
-                    writer.WriteLine(str);
-                }
-                else
-                {
-                    Dictionary<string,string> dic = Utils.Utils.getJSONtoDictonary(str);
+                JObject obj = (JObject)JsonConvert.DeserializeObject(txt);
 
-                    StringBuilder builder = new StringBuilder();
-                    builder.Append(dic["Sender"]).Append(":").Append(dic["text"]);
+                writer.WriteLine("몬가일어나고있어");
+                WorkType workType = (FncObjects.WorkType)Enum.Parse(typeof(FncObjects.WorkType), Convert.ToString(obj.GetValue("TYPE")));
+                //string str = reader.ReadLine();
 
-                    writer.WriteLine(builder);
+                switch (workType)
+                {
+                    case WorkType.LOGIN: 
+                        Console.WriteLine("LOGIN");
+                        break;
+                    case WorkType.SEND_MSG:
+                        Console.WriteLine("SendMsg");
+                        break;
+                    case WorkType.SEND_DATA:
+                        Console.WriteLine("SendData");
+                        break;
+                    case WorkType.MAKE_CHAT:
+                        Console.WriteLine("MakeChat");
+                        break;
                 }
+
+
+                //if(str == "getMember")
+                //{
+                //    string sqlString = 
+                //        $@"SELECT A.SEQ, A.NAME, A.DEPT, A.TITLE 
+                //             FROM FNC_USER A  
+                //            WHERE SEQ <> '{str.Replace("getMember", "") }'";
+                //    str = Utils.Utils.getDataTableToJSON(myOracleConnection.getSqlData(sqlString));
+                //    writer.WriteLine(str);
+                //}
+                //else if ( str == "getDept")
+                //{
+                //    string sqlString =
+                //        $@"SELECT A.DEPT, A.DEPTNAME
+                //             FROM FNC_DEPT A";
+                //    str = Utils.Utils.getDataTableToJSON(myOracleConnection.getSqlData(sqlString));
+                //    writer.WriteLine(str);
+                //}
+                //else
+                //{
+                //    Dictionary<string,string> dic = Utils.Utils.getJSONtoDictonary(str);
+
+                //    StringBuilder builder = new StringBuilder();
+                //    builder.Append(dic["Sender"]).Append(":").Append(dic["text"]);
+
+                //    writer.WriteLine(builder);
+                //}
 
             }
-           
+
         }
 
-
+        private string getJSonMsg(StreamReader reader)
+        {
+            StringBuilder msg = new StringBuilder();
+            while(reader.Peek() >= 0)
+                msg.Append((char)reader.Read());
+            Console.WriteLine(msg.ToString());
+            return msg.ToString();
+        }
     }
 }
