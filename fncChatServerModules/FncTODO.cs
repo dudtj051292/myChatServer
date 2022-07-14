@@ -9,6 +9,6 @@ namespace fncChatServerModules
 {
     public abstract class FncTODO
     {
-        public abstract void DoWork(JObject jobj );
+        public abstract string DoWork(JObject jobj );
     }
 }

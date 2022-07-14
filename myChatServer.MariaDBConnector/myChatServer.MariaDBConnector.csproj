@@ -91,5 +91,11 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FncObjects\FncObjects.csproj">
+      <Project>{49a07a56-56ff-451d-8e19-1d5e9ae246c2}</Project>
+      <Name>FncObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

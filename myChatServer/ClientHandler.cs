@@ -1,4 +1,5 @@
-﻿using FncObjects;
+﻿using fncChatServerModules;
+using FncObjects;
 using myChatServer.OracleConnector;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -42,13 +43,18 @@ namespace myChatServer
                 JObject obj = (JObject)JsonConvert.DeserializeObject(txt);
 
                 writer.WriteLine("몬가일어나고있어");
+                try
+                {
+
                 WorkType workType = (FncObjects.WorkType)Enum.Parse(typeof(FncObjects.WorkType), Convert.ToString(obj.GetValue("TYPE")));
                 //string str = reader.ReadLine();
 
                 switch (workType)
                 {
-                    case WorkType.LOGIN: 
+                    case WorkType.LOGIN:
                         Console.WriteLine("LOGIN");
+                        FncTODO todo = new FncLogin();
+                        todo.DoWork(obj);
                         break;
                     case WorkType.SEND_MSG:
                         Console.WriteLine("SendMsg");
@@ -61,7 +67,11 @@ namespace myChatServer
                         break;
                 }
 
+                }
+                catch
+                {
 
+                }
                 //if(str == "getMember")
                 //{
                 //    string sqlString = 

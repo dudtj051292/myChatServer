@@ -44,11 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ErrorTextModule.cs" />
+    <Compile Include="FncSendMsg.cs" />
     <Compile Include="FncLogin.cs" />
     <Compile Include="FncTODO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FncObjects\FncObjects.csproj">
+      <Project>{49A07A56-56FF-451D-8E19-1D5E9AE246C2}</Project>
+      <Name>FncObjects</Name>
+    </ProjectReference>
     <ProjectReference Include="..\myChatServer.MariaDBConnector\myChatServer.MariaDBConnector.csproj">
       <Project>{FF8E57BC-B7B2-4C03-97D2-2DD5F96F80BA}</Project>
       <Name>myChatServer.MariaDBConnector</Name>

@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using FncObjects;
+using System.Security.Cryptography;
 
 namespace DBModule
 {
@@ -18,6 +20,9 @@ namespace DBModule
 
         private static List<string> sqlList = new List<string>();
 
+        private static readonly string KEY = "01234567890123456789012345678901";
+        private static readonly string KEY_128 = KEY.Substring(0, 128 / 8);
+        private static readonly string KEY_256 = KEY.Substring(0, 256 / 8);
 #if DEBUG
         private static string mysql_conn_str = "server=127.0.0.1;user id=intranet;password=dlsxmfkspt;database=intranet;Charset=utf8mb4;";
 #else
@@ -103,6 +108,39 @@ namespace DBModule
             }
             return success;
         }
+
+        public static FncObjects.LOGIN Login(string ID, string PW, out FncUser user)
+        {
+            FncObjects.LOGIN login = LOGIN.UNKNOWS;
+            user = null;
+            try
+            {
+                string sql = string.Format("SELECT SABUN FROM HR WHERE SABUN = '{0}' AND PASSWD = '{1}'", ID, AESEncrypt256(PW));
+                DataTable dt = GetDataTable(sql);
+                if(dt.Rows.Count == 0)
+                {
+                    login = FncObjects.LOGIN.INCORRECT;
+                }
+                else
+                {
+                    user = new FncUser( Convert.ToString(dt.Rows[0]["SABUN"]));
+                    login = FncObjects.LOGIN.SUCCESS;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                login = FncObjects.LOGIN.UNKNOWS;
+            }
+            finally
+            {
+                // 로그 찍을 일 있으면 작성
+
+            }
+
+            return login;
+        }
+
         public static DataTable GetDataTable(string sql, bool openNotePad = false, bool showProgressPopup = false)
         {
 
@@ -187,18 +225,78 @@ namespace DBModule
             return dt;
         }
 
-        public static bool Login()
-        {
-            bool isSuccess = false;
-
-
-            return isSuccess;
-        }
-
         public static void AddSql(string sql)
         {
             sqlList.Add(sql);
         }
+        public static string AESDecrypt256(string encrypt)
+        {
 
+            try
+            {
+                byte[] encryptBytes = Convert.FromBase64String(encrypt);
+
+                RijndaelManaged rm = new RijndaelManaged();
+
+                rm.Mode = CipherMode.CBC;
+                rm.Padding = PaddingMode.PKCS7;
+                rm.KeySize = 256;
+
+                MemoryStream memoryStream = new MemoryStream(encryptBytes);
+
+                ICryptoTransform decryptor = rm.CreateDecryptor(Encoding.UTF8.GetBytes(KEY_256), Encoding.UTF8.GetBytes(KEY_128));
+                CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read);
+
+                byte[] plainBytes = new byte[encryptBytes.Length];
+
+                int plainCount = cryptoStream.Read(plainBytes, 0, plainBytes.Length);
+
+                string plainString = Encoding.UTF8.GetString(plainBytes, 0, plainCount);
+
+                cryptoStream.Close();
+                memoryStream.Close();
+
+                return plainString;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        //AES_256 암호화
+        public static string AESEncrypt256(string plain)
+        {
+            try
+            {
+                //byte 변환
+                byte[] plainBytes = Encoding.UTF8.GetBytes(plain);
+
+                RijndaelManaged rm = new RijndaelManaged();
+                rm.Mode = CipherMode.CBC;
+                rm.Padding = PaddingMode.PKCS7;
+                rm.KeySize = 256;
+
+                MemoryStream memoryStream = new MemoryStream();
+
+                ICryptoTransform encryptor = rm.CreateEncryptor(Encoding.UTF8.GetBytes(KEY_256), Encoding.UTF8.GetBytes(KEY_128));
+                CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write);
+
+                cryptoStream.Write(plainBytes, 0, plainBytes.Length);
+                cryptoStream.FlushFinalBlock();
+
+                byte[] encryptBytes = memoryStream.ToArray();
+
+                string encryptString = Convert.ToBase64String(encryptBytes);
+
+                cryptoStream.Close();
+                memoryStream.Close();
+
+                return encryptString;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }
