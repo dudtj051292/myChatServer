@@ -16,8 +16,8 @@ namespace FncObjects
 
     public enum LOGIN
     {
-        SUCCESS = 0,
-        INCORRECT = 1,
+        INCORRECT = 0,
+        SUCCESS = 1,
         UNKNOWS = 2,
     }
 

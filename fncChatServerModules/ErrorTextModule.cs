@@ -23,13 +23,14 @@ namespace fncChatServerModules
         }
  
 
-        public string MakeMsg(int result, string caption , string contents, int errorCode)
+        public string MakeMsg(FncObjects.WorkType type, int result, string caption , string contents, int errorCode)
         {
             JObject jobj = new JObject();
+            jobj.Add(new JProperty("WORKTYPE", type));
             jobj.Add(new JProperty("RESULT", result));
             jobj.Add(new JProperty("CAPTION", caption));
             jobj.Add(new JProperty("CONTENTS", contents));
-            jobj.Add(new JProperty("ERRORCODE", errorCode));
+            jobj.Add(new JProperty("CODE", errorCode));
             return jobj.ToString();
         }
 

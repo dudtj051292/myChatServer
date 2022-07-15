@@ -47,7 +47,7 @@ namespace fncChatServerModules
                 contents = "";
                 errorCode = (int)Login;
             }
-            return ErrorTextModule.getInstance.MakeMsg(result, caption, contents, errorCode);
+            return ErrorTextModule.getInstance.MakeMsg(WorkType.LOGIN, result, caption, contents, errorCode);
             MysqlModule.GetDataTable(sql);
         }
     }

@@ -115,7 +115,7 @@ namespace DBModule
             user = null;
             try
             {
-                string sql = string.Format("SELECT SABUN FROM HR WHERE SABUN = '{0}' AND PASSWD = '{1}'", ID, AESEncrypt256(PW));
+                string sql = string.Format("SELECT SABUN FROM HR WHERE SABUN = '{0}' AND PASSWD = PASSWORD('{1}')", ID, PW);
                 DataTable dt = GetDataTable(sql);
                 if(dt.Rows.Count == 0)
                 {
@@ -125,7 +125,7 @@ namespace DBModule
                 {
                     user = new FncUser( Convert.ToString(dt.Rows[0]["SABUN"]));
                     login = FncObjects.LOGIN.SUCCESS;
-
+                    
                 }
             }
             catch (Exception ex)

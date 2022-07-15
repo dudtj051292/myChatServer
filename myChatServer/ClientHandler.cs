@@ -42,6 +42,12 @@ namespace myChatServer
                 
                 JObject obj = (JObject)JsonConvert.DeserializeObject(txt);
 
+
+                if (obj == null)
+                    return;
+                Console.WriteLine("입력이 들어왔습니다... ");
+                Console.WriteLine(obj.ToString().Replace(Environment.NewLine, ""));
+
                 writer.WriteLine("몬가일어나고있어");
                 try
                 {
@@ -52,9 +58,12 @@ namespace myChatServer
                 switch (workType)
                 {
                     case WorkType.LOGIN:
-                        Console.WriteLine("LOGIN");
-                        FncTODO todo = new FncLogin();
-                        todo.DoWork(obj);
+                            Console.WriteLine("LOGIN");
+                            FncTODO todo = new FncLogin();
+                            Console.WriteLine("로그인결과... ");
+                            string result = todo.DoWork(obj);
+                            Console.WriteLine(result.Replace(Environment.NewLine, ""));
+                            writer.WriteLine(result);
                         break;
                     case WorkType.SEND_MSG:
                         Console.WriteLine("SendMsg");
